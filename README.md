@@ -19,20 +19,32 @@ repo's own `doc-elektron/guideline-pool-registry-reporting.md`).
 ## Files
 
 - **`pools.txt`** - one line per pool, both PPLNS (`elektron-net-ppool`) and
-  solo (`elektron-net-pool`) entries together.
+  solo (`elektron-net-pool`) entries together, tagged by type.
 - **`mempools.txt`** - one line per known block explorer / mempool instance.
 
-Both files use the same, deliberately simple format, one entry per line:
+`mempools.txt` uses a deliberately simple format, one entry per line:
 
 ```
 "Name"; "URL";
 ```
 
+`pools.txt` uses the same format with one extra field, the pool type, always
+first, either `"PPLNS"` or `"SOLO"`:
+
+```
+"Type"; "Name"; "URL";
+```
+
+Putting the type first keeps it in a fixed position regardless of what the
+name/URL contain, so tools can filter or sort by type without parsing the
+whole line. It exists for future use (e.g. separate PPLNS/solo listings); the
+current reporting/verification design does not depend on it.
+
 Example (`pools.txt`):
 
 ```
-"Kutlusoy's Solo Pool"; "https://solopool3.elektron-net.org";
-"Bob's PPLNS Pool"; "https://pool.bobtheguy.com";
+"SOLO"; "Kutlusoy's Solo Pool"; "https://solopool3.elektron-net.org";
+"PPLNS"; "Bob's PPLNS Pool"; "https://pool.bobtheguy.com";
 ```
 
 Example (`mempools.txt`):
