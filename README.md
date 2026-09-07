@@ -22,17 +22,18 @@ repo's own `doc-elektron/guideline-pool-registry-reporting.md`).
   solo (`elektron-net-pool`) entries together, tagged by type.
 - **`mempools.txt`** - one line per known block explorer / mempool instance.
 
-`mempools.txt` uses a deliberately simple format, one entry per line:
+`mempools.txt` uses a deliberately simple format, one entry per line, fields
+comma-separated, each line ending in `;`:
 
 ```
-"Name"; "URL";
+"Name", "URL";
 ```
 
 `pools.txt` uses the same format with one extra field, the pool type, always
 first, either `"PPLNS"` or `"SOLO"`:
 
 ```
-"Type"; "Name"; "URL";
+"Type", "Name", "URL";
 ```
 
 Putting the type first keeps it in a fixed position regardless of what the
@@ -43,20 +44,22 @@ current reporting/verification design does not depend on it.
 Example (`pools.txt`):
 
 ```
-"SOLO"; "Kutlusoy's Solo Pool"; "https://solopool3.elektron-net.org";
-"PPLNS"; "Bob's PPLNS Pool"; "https://pool.bobtheguy.com";
+"SOLO", "Kutlusoy's Solo Pool", "https://solopool3.elektron-net.org";
+"PPLNS", "Bob's PPLNS Pool", "https://pool.bobtheguy.com";
 ```
 
 Example (`mempools.txt`):
 
 ```
-"Bob's MemPool"; "https://mempool.bobtheguy.com";
+"Bob's MemPool", "https://mempool.bobtheguy.com";
 ```
 
 No tokens, no signatures, no other fields. Software consuming these files is
 expected to verify a claim (e.g. "this block belongs to pool X") by calling
 back to the URL listed here for that name, rather than trusting either file's
-content or any report on its own.
+content or any report on its own. See `doc-elektron/integration-pools.md` and
+`doc-elektron/integration-mempools.md` for the exact HTTP protocol third-party
+pool and mempool-explorer software can implement to participate.
 
 ## Adding an entry
 
