@@ -1,3 +1,3 @@
-"Elektron Net Mempool"; "https://mempool.elektron-net.org";
-"Elektron Net Mempool 2"; "https://mempool2.elektron-net.org";
-"Elektron Net Mempool 3"; "https://mempool3.elektron-net.org";
+"Elektron Net Mempool", "https://mempool.elektron-net.org";
+"Elektron Net Mempool 2", "https://mempool2.elektron-net.org";
+"Elektron Net Mempool 3", "https://mempool3.elektron-net.org";
