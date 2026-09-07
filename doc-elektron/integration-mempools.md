@@ -49,7 +49,7 @@ Validate the payload (non-empty `name`, `blockHash` matching `^[a-f0-9]{64}$`, c
 Call back to the pool's own registered URL:
 
 ```
-GET <registered_pool_url>/pool/identity/confirm?blockHash=<same hash>
+GET <registered_pool_url>/api/pool/identity/confirm?blockHash=<same hash>
 
 200 OK
 {
@@ -59,6 +59,7 @@ GET <registered_pool_url>/pool/identity/confirm?blockHash=<same hash>
 }
 ```
 
+- The `/api` path segment is required, not optional: every registered pool's URL is its dashboard domain, and the reference pool software (`elektron-net-pool`/`elektron-net-ppool`) only exposes its backend routes under that prefix at that domain (a proxy in front of it routes everything else to the dashboard frontend instead). Software implementing this protocol must call `<registered_pool_url>/api/pool/identity/confirm` exactly, or every callback against a registered pool will 404.
 - Recommended timeout: 5 seconds. Treat a timeout, connection error, non-2xx response, or `confirmed !== true` all the same way: **do not attribute the block.** There is no partial trust here - either the pool's own server confirms it, or you do nothing.
 - Only on `confirmed === true` should you proceed to attribute the block to that pool in whatever data model your software uses.
 - Skipping this step (trusting the report directly) reintroduces exactly the spoofing problem this design exists to avoid - anyone could then claim any block under any registered pool's name.
@@ -81,6 +82,6 @@ Open a pull request. Not required to consume the registry (Sections 2-5 work reg
 
 - [ ] Fetch and periodically refresh `pools.txt`, with a local on-disk cache read first on startup
 - [ ] Implement `POST /api/v1/pool-registry/report`, validating the payload and resolving the URL only from your own synced registry map
-- [ ] Call back to that URL's `/pool/identity/confirm` before ever attributing anything, treating any non-`true` outcome as "do not attribute"
+- [ ] Call back to that URL's `/api/pool/identity/confirm` before ever attributing anything, treating any non-`true` outcome as "do not attribute"
 - [ ] Wired confirmed reports into your own pool-attribution data model
 - [ ] Verified end to end against a real (or test) pool implementation

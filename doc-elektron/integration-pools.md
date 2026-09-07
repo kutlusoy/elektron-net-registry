@@ -52,7 +52,7 @@ Content-Type: application/json
 **This is the security-critical part.** Every mempool instance that receives a report from you will call back to your own registered URL to verify it before trusting anything:
 
 ```
-GET <your_pool_url>/pool/identity/confirm?blockHash=<64-character hex>
+GET <your_pool_url>/api/pool/identity/confirm?blockHash=<64-character hex>
 
 200 OK
 {
@@ -64,6 +64,7 @@ GET <your_pool_url>/pool/identity/confirm?blockHash=<64-character hex>
 
 `confirmed` **must** be `true` only for a block hash your software genuinely, recently found and submitted itself - never for a hash it merely recognizes as valid, never as a default `true`, never based on trusting the caller. The entire trust model rests on this endpoint being answered honestly: nobody else can make your server say `true` for a block they claim, since they do not control your infrastructure, so a correct implementation is unforgeable by a third party.
 
+- The `/api` path segment is required, not optional: mempool instances call back to exactly `<your_pool_url>/api/pool/identity/confirm`, since that is what the reference implementations serve at their registered dashboard domain. Serve this endpoint at that path, whatever your own internal routing otherwise looks like.
 - Keep a short-lived, in-memory record of block hashes you have recently found (a TTL map or small ring buffer is enough; no database table needed). The reference implementation uses a 30-minute window, which comfortably outlasts any reasonable mempool polling/retry latency.
 - This endpoint must be reachable without authentication - the mempool instance calling it has no credential to present, and does not need one; the security comes from the fact that only you can make your own server answer this way.
 - Recommended timeout for the caller side is 5 seconds; implement accordingly (answer fast, do not block on slow I/O).
@@ -82,6 +83,6 @@ or `"SOLO"` if you are a solo pool. Open a pull request. There is no automatic a
 
 - [ ] Fetch and periodically refresh `mempools.txt`, with a local on-disk cache read first on startup
 - [ ] Report every found block to every known mempool instance, fire-and-forget, short timeout
-- [ ] Implement `GET /pool/identity/confirm?blockHash=<hex>`, answering `true` only for blocks you genuinely, recently found
+- [ ] Implement `GET /api/pool/identity/confirm?blockHash=<hex>`, answering `true` only for blocks you genuinely, recently found
 - [ ] Registered your own `pools.txt` entry
 - [ ] Verified end to end: mine/submit a real (or regtest) block, confirm a mempool instance's dashboard shows your pool's name
