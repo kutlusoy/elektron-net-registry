@@ -16,6 +16,25 @@ replacement, currently being planned across those same three repos plus
 [`elektron-net-stack`](https://github.com/kutlusoy/elektron-net-stack) (see each
 repo's own `doc-elektron/guideline-pool-registry-reporting.md`).
 
+## Who can apply
+
+Not every mempool instance or pool can list itself here. To keep the registry
+useful and trustworthy, entries must meet the following criteria before
+opening a pull request.
+
+### Mempools
+
+- Should have been in live operation for at least 1 month.
+- Should support the [Elektron Net - elektron-net-mempool Pool Registry Reporting](https://github.com/kutlusoy/elektron-net-mempool/blob/main/doc-elektron/guideline-pool-registry-reporting.md) guideline.
+- Can be the official [`elektron-net-mempool`](https://github.com/kutlusoy/elektron-net-mempool) repo, or other mempool software that is compatible with and adapted for Elektron Net.
+
+### Solo Pools and PPLNS Pools
+
+- The pool software should have a public URL and should have been in live operation for at least 1 month.
+- Should have at least 5 continuously active miners on the pool.
+- Should support the Elektron Net Pool or PPLNS Registry Reporting guideline, either [`elektron-net-pool`](https://github.com/kutlusoy/elektron-net-pool/blob/main/doc-elektron/guideline-pool-registry-reporting.md) or [`elektron-net-ppool`](https://github.com/kutlusoy/elektron-net-ppool/blob/main/doc-elektron/guideline-pool-registry-reporting.md).
+- Can be the official Pool or PPLNS repo ([`elektron-net-pool`](https://github.com/kutlusoy/elektron-net-pool) or [`elektron-net-ppool`](https://github.com/kutlusoy/elektron-net-ppool)), or other pool software that is compatible with and adapted for Elektron Net.
+
 ## Files
 
 - **`pools.txt`** - one line per pool, both PPLNS (`elektron-net-ppool`) and
